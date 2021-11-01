@@ -1,8 +1,9 @@
-# Deployment Model ANN (Cat vs Dog)
+# Deployment Facenet Model To Heroku
 
 ## Deskripsi singkat
 
-Repository ini berisi semua file yang dibutuhkan untuk melakukan deployment model Machine Learning Image Classification menggunakan ANN (Artificial Neural Network). Adapun model yang digunakan merupakan model untuk memprediksi gambar kucing atau anjing (Cat vs Dog).
+Repository ini berisi semua file yang dibutuhkan untuk melakukan deployment model Machine Learning Image Classification menggunakan CNN. 
+Adapun model yang digunakan merupakan model untuk memprediksi gambar kucing atau anjing (Cat vs Dog).
 
 #
 
@@ -10,7 +11,7 @@ Repository ini berisi semua file yang dibutuhkan untuk melakukan deployment mode
 
 Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti format sebagai berikut:
 
--   Gambar dengan format umum seperti .jpeg, .png, .webp, dsb.
+-   Gambar dengan format .png.
 -   Gambar dikonversi ke dalam bentuk array/tensor
 -   Nilai pixel gambar memiliki rentang nilai 0-1 dengan cara membagi semua nilai pixelnya dengan 255.0
 -   Gambar memiliki dimensi `(1, 256, 256, 3)`
@@ -24,7 +25,7 @@ Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti form
 -   templates/
     -   index.html --> Berisi template website.
 -   app.py --> Berisi konfigurasi route dan proses prediksi model untuk API.
--   model.h5 --> Model Image Classification ANN yang sudah di-training.
+-   model.h5 --> Model Image Classification ANN yang sudah di-training. (mungkin nanti perlu diupdate lagi)
 -   requirements.txt --> Berisi daftar dependency/package Python yang diperlukan untuk menjalankan API dan model Image Classification ANN.
 
 #
@@ -33,9 +34,8 @@ Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti form
 
 1. Buka terminal/command prompt/power shell.
 2. python3 -m venv env
-   source env/bin/activate
 3. Aktifkan virtual environment dengan\
-   `conda activate <nama-environment>`
+   `source env/bin/activate`
 4. Install semua dependency/package Python dengan\
    `pip install -r requirements.txt`
 5. Jalankan API menggunakan perintah\
@@ -44,5 +44,7 @@ Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti form
 ## Akses melalui Website
 
 1. Anda akan diberikan URL untuk membuka website berupa `localhost:5000/` atau `127.0.0.1:5000/`.
-1. Buka URL dengan browser, coba masukkan gambar kucing atau anjing yang ingin di prediksi.
-1. Anda akan diberikan prediksi bahwa pada gambar tersebut terdapat kucing atau anjing pada halaman website.
+2. Buka URL dengan browser, coba masukkan gambar kucing atau anjing yang ingin diprediksi.
+
+nanti dh uupdate lagi, mager
+3. Anda akan diberikan prediksi bahwa pada gambar tersebut terdapat kucing atau anjing pada halaman website.
