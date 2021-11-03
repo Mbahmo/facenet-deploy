@@ -12,7 +12,6 @@ from src import compare
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = './static/uploads/'
-model                       = load_model('model.h5')
 
 class_dict = {0: 'Cat (Kucing)', 1: 'Dog (Anjing)'}
 
@@ -41,9 +40,7 @@ def index():
 
             # prediction = predict_label(img_path)
             # return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
-
-            prediction = predict_label(img_path)
-            return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
+            return render_template('index.html', uploaded_image=image.filename)
 
 
     return render_template('index.html')
