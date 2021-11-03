@@ -8,17 +8,26 @@
             href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
             rel="stylesheet"
         />
-        <title>Cat vs Dog App</title>
+
+        <title>FaceNet Face Verification System</title>
+
     </head>
-    <body>
+
+
+    <body class="bg-red-800">
+
         <section
             class="
-                flex
+
+                block
+                md:flex
+
                 justify-center
                 items-center
                 w-screen
-                h-screen
-                bg-indigo-500
+
+                p-4
+                md:p-0
             "
         >
             <main
@@ -26,12 +35,21 @@
                     flex flex-col
                     justify-center
                     items-center
+
+                    p-4
+                    md:p-16
+
                     p-16
+
                     bg-white
                     rounded-lg
                 "
             >
+
+                <h1 class="text-3xl text-bold">FaceNet Face Verification System</h1>
+
                 <h1 class="text-3xl text-bold">Cat vs Dog</h1>
+
 
                 {% if uploaded_image %}
                 <img
@@ -52,17 +70,25 @@
                     "
                 >
                     <p class="text-center">
+                        Masukkan Citra Wajah
+                    </p>
+                </div>
+                {% endif %} {% if prediction %}
+                <p class="mb-8">Result : {{prediction}}</p>
+
                         Masukkan gambar kucing atau anjing
                     </p>
                 </div>
                 {% endif %} {% if prediction %}
                 <p class="mb-8">Hasil Prediksi: {{prediction}}</p>
+
                 {% endif %}
 
                 <form
                     method="post"
                     enctype="multipart/form-data"
-                    class="flex flex-col"
+                    class="flex flex-col w-full"
+
                 >
                     <input
                         type="file"
@@ -77,24 +103,12 @@
                     />
                     <button
                         type="submit"
-                        class="p-4 bg-indigo-500 text-white rounded-md"
                     >
                         Prediksi Gambar
                     </button>
                 </form>
             </main>
         </section>
-        <footer class="flex gap-x-8 justify-center items-center h-32 bg-white">
-            <img
-                class="h-16"
-                src="https://digitalent.kominfo.go.id/assets/@images/logo.png"
-                alt="logo-dts"
-            />
-            <img
-                class="h-16"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg.png"
-                alt=""
-            />
-        </footer>
+
     </body>
 </html>
