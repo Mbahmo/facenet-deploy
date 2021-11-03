@@ -16,6 +16,5 @@ venv.bak/
 
 data/images
 models/
-.idea
 
 !/static/
