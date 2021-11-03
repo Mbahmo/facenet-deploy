@@ -30,7 +30,6 @@ def index():
             image = request.files['image']
             img_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
             image.save(img_path)
-
             argv = []
             argv.append("models/20180408-102900.pb")
             argv.append("models/my_classifier.pkl")
@@ -43,11 +42,16 @@ def index():
             # prediction = predict_label(img_path)
             # return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
 
+            prediction = predict_label(img_path)
+            return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
+
+
     return render_template('index.html')
 
 @app.route('/display/<filename>')
 def send_uploaded_image(filename=''):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/align_train', methods=['POST', 'GET'])
 def align_train_route():
