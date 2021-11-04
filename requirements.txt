@@ -12,3 +12,4 @@ Pillow
 requests
 psutil
 imageio
+Flask-Session

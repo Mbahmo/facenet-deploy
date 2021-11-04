@@ -45,9 +45,6 @@
 
                 <h1 class="text-3xl text-bold">FaceNet Face Verification System</h1>
 
-                <h1 class="text-3xl text-bold">Cat vs Dog</h1>
-
-
                 {% if uploaded_image %}
                 <img
                     src="{{ url_for('send_uploaded_image', filename=uploaded_image) }}"
@@ -71,10 +68,10 @@
                     </p>
                 </div>
                 {% endif %} {% if prediction %}
-                <p class="mb-8">Result : {{prediction}}</p>
+                <p class="mb-8">
+                    Result : {{prediction}}</p>
 
                         Masukkan gambar kucing atau anjing
-                    </p>
                 </div>
                 {% endif %} {% if prediction %}
                 <p class="mb-8">Hasil Prediksi: {{prediction}}</p>
