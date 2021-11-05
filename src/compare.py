@@ -82,9 +82,15 @@ def main(args):
                 for j in range(cout_per_image[i]):
                     print('%s: %.3f' % (class_names[best_class_indices[k]], best_class_probabilities[k]))
                     person = class_names[best_class_indices[k]]
-                    acuracy = best_class_probabilities[k] * 100
+                    confidence = best_class_probabilities[k] * 100
                     k+=1
-    return True, person, acuracy, img_aligned
+
+    result = {}
+    result['detected']   = True
+    result['person']     = person
+    result['confidence'] = confidence
+
+    return result
 
 
 def load_and_align_data(image_paths, image_size, margin, gpu_memory_fraction):

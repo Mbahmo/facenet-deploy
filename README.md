@@ -3,13 +3,13 @@
 ## Deskripsi singkat
 
 Repository ini berisi semua file yang dibutuhkan untuk melakukan deployment model Machine Learning Image Classification menggunakan CNN. 
-Adapun model yang digunakan merupakan model untuk memprediksi gambar kucing atau anjing (Cat vs Dog).
+Adapun model yang digunakan merupakan model untuk memprediksi dari citra wajah seseorang.
 
 #
 
 ## Sekilas mengenai input model
 
-Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti format sebagai berikut:
+Agar dapat memprediksi wajah dari pegawai, data input model harus mengikuti format sebagai berikut:
 
 -   Gambar dengan format .png.
 -   Gambar dikonversi ke dalam bentuk array/tensor
@@ -44,7 +44,5 @@ Agar dapat memprediksi kucing atau anjing, data input model harus mengikuti form
 ## Akses melalui Website
 
 1. Anda akan diberikan URL untuk membuka website berupa `localhost:5000/` atau `127.0.0.1:5000/`.
-2. Buka URL dengan browser, coba masukkan gambar kucing atau anjing yang ingin diprediksi.
-
-nanti dh uupdate lagi, mager
-3. Anda akan diberikan prediksi bahwa pada gambar tersebut terdapat kucing atau anjing pada halaman website.
+2. Buka URL dengan browser dan masukkan citra wajah yang ingin diprediksi.
+3. Anda akan diberikan prediksi identitas dari pemilik wajah di citra tersebut.

@@ -44,15 +44,13 @@
             >
 
                 <h1 class="text-3xl text-bold">FaceNet Face Verification System</h1>
-                {% if session['name'] %}
-                <h3>asdasdas {{session[name]}}</h3>
-                {% endif %}
-
-                {% if uploaded_image %}
-                <img
-                    src="{{ url_for('send_uploaded_image', filename=uploaded_image) }}"
-                    class="mt-8 mb-4 h-48 border-8 border-gray-200 rounded-md"
-                />
+                {% if session['detected'] %}
+                    <h3 class="text-xl text-bold">{{session['person']}}</h3>
+                    <h4 class="text-xl text-bold">{{session['confidence']}}</h4>
+                    <img
+                            src="{{ url_for('send_uploaded_image', filename=(session['img']) ) }}"
+                            class="mt-8 mb-4 h-48 border-8 border-gray-200 rounded-md"
+                    />
                 {% else %}
                 <div
                     class="
@@ -70,7 +68,9 @@
                         Masukkan Citra Wajah
                     </p>
                 </div>
-                {% endif %} {% if prediction %}
+                {% endif %}
+
+                {% if prediction %}
                 <p class="mb-8">
                     Result : {{prediction}}</p>
 
