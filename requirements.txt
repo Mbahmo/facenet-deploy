@@ -12,4 +12,5 @@ Pillow
 requests
 psutil
 imageio
-Flask-Session
+flask-Session
+celery

@@ -44,6 +44,9 @@
             >
 
                 <h1 class="text-3xl text-bold">FaceNet Face Verification System</h1>
+                {% if session['name'] %}
+                <h3>asdasdas {{session[name]}}</h3>
+                {% endif %}
 
                 {% if uploaded_image %}
                 <img

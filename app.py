@@ -11,12 +11,19 @@ import os
 from src.align import align_dataset_mtcnn as mtcnn
 from src import classifier
 from src import compare
+from celery import Celery
 
 app = Flask(__name__)
-app.secret_key                  = 'super secret key'
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"]      = "filesystem"
-app.config['UPLOAD_FOLDER']     = './static/uploads/'
+app.secret_key                      = 'super secret key'
+app.config["SESSION_PERMANENT"]     = False
+app.config["SESSION_TYPE"]          = "filesystem"
+app.config['UPLOAD_FOLDER']         = './static/uploads/'
+app.config['CELERY_BROKER_URL']     = 'redis://localhost:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
+
 
 def predict_label(img_path):
     loaded_img = load_img(img_path, target_size=(256, 256))
@@ -25,19 +32,6 @@ def predict_label(img_path):
     predicted_bit = np.round(model.predict(img_array)[0][0]).astype('int')
     return class_dict[predicted_bit]
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        if request.files:
-            image    = request.files['image']
-            img_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
-            image.save(img_path)
-            session['img_path'] = img_path
-            print("Request Berjalan")
-
-            return redirect(url_for('loading', operation = 'comparing'))
-    return render_template('index.html')
-
 @app.route('/compare', methods=['GET', 'POST'])
 def compare_route():
     argv = []
@@ -45,21 +39,25 @@ def compare_route():
     argv.append("models/my_classifier.pkl")
     argv.append(session.get('img_path'))
     compare.main(compare.parse_arguments(argv))
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
-@app.route('/loading', methods=['GET'])
-def loading():
-    operation = request.args.get("operation")
-    if(operation == "comparing"):
-        url = "/compare"
-        return render_template('loading.html', url = url)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        if request.files:
+            image             = request.files['image']
+            img_path          = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
+            image.save(img_path)
+
+            session['img_path']  = img_path
+
+            url               = "/compare"
+            # compare_route.apply_async(args=[image])
+            return render_template('loading.html', url = url)
     else:
-        url = "/"
-        return render_template('loading.html', url = url)
-
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    print("test")
+        # compare_route()
+        session['name'] = "Joko"
+        return render_template('index.html', session = session)
 
 @app.route('/display/<filename>')
 def send_uploaded_image(filename=''):
