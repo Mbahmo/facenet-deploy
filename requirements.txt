@@ -11,4 +11,4 @@ requests
 psutil
 imageio
 flask-Session
-cv2
+opencv-python
