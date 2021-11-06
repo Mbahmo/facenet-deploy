@@ -34,7 +34,7 @@ MarkupSafe==2.0.1
 matplotlib
 numpy
 oauthlib==3.1.1
-opencv-python
+opencv-python-headless
 opt-einsum
 Pillow==8.4.0
 prompt-toolkit==3.0.22
