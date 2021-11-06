@@ -11,7 +11,6 @@ import os
 from src.align import align_dataset_mtcnn as mtcnn
 from src import classifier
 from src import compare
-from celery import Celery
 
 app = Flask(__name__)
 app.secret_key                   = 'super secret key'
