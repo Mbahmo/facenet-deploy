@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, \
-    send_from_directory, redirect, url_for, session, g
+    send_from_directory, redirect, url_for, session, request, jsonify, g, send_file
 from flask_session import Session
 
 from tensorflow.keras.models import load_model
@@ -27,6 +27,11 @@ classifier_models = "models/my_classifier.pkl"
 #
 # test_raw_folder      = "data/images/test_raw"
 # test_aligned_folder  = "data/images/test_aligned"
+
+@app.route('/restful/img', methods=['POST', 'GET'])
+def restful_image():
+    img = request.files['img']
+    print(img)
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare_route():

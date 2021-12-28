@@ -15,5 +15,3 @@ venv.bak/
 .idea/
 
 data/images
-
-!/static/
