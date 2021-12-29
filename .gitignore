@@ -15,3 +15,7 @@ venv.bak/
 .idea/
 
 data/images
+
+__pycache__/
+
+requirements.txt

@@ -42,7 +42,7 @@ import src.align.detect_face as detect_face
 from six import moves
 from PIL import Image
 
-def main(args, img, Is_Restful):
+def main(args, img, Is_Restful, model_classifier, class_names):
     if Is_Restful:
         isface, images, cout_per_image, nrof_samples, img_aligned = load_and_align_data_rest(img, 160, 44, 1.0)
     else:
@@ -70,32 +70,22 @@ def main(args, img, Is_Restful):
             
             nrof_images = len(args.image_files)
 
-            classifier_filename_exp = args.classifier_filename
+            model = model_classifier
 
-            print('Testing classifier')
-            with open(classifier_filename_exp, 'rb') as infile:
-                (model, class_names) = pickle.load(infile)
-
-            print('Loaded classifier model from file "%s"\n' % classifier_filename_exp)
             predictions = model.predict_proba(emb)
             best_class_indices = np.argmax(predictions, axis=1)
             best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
 
-            print(predictions)
-
             k=0
             for i in range(nrof_samples):
                 for j in range(cout_per_image[i]):
-                    print('%s: %.3f' % (class_names[best_class_indices[k]], best_class_probabilities[k]))
+                    # print('%s: %.3f' % (class_names[best_class_indices[k]], best_class_probabilities[k]))
                     person = class_names[best_class_indices[k]]
                     confidence = best_class_probabilities[k] * 100
-                    print(confidence)
 
                     if(confidence < 5):
                         confidence = None
                     k+=1
-
-
     result = {}
     result['detected']   = True
     result['person']     = person
@@ -195,8 +185,8 @@ def parse_arguments(argv):
     
     parser.add_argument('model', type=str, 
         help='Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file')
-    parser.add_argument('classifier_filename',  help='Classifier model file name as a pickle (.pkl) file. ' +
-        'For training this is the output and for classification this is an input.')
+    # parser.add_argument('classifier_filename',  help='Classifier model file name as a pickle (.pkl) file. ' +
+    #     'For training this is the output and for classification this is an input.')
     parser.add_argument('image_files', type=str, nargs='+', help='Images to compare')
     parser.add_argument('--image_size', type=int,
         help='Image size (height, width) in pixels.', default=160)

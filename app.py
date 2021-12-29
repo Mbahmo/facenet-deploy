@@ -9,6 +9,7 @@ import numpy as np
 import time
 import os
 import cv2
+import pickle
 
 from io import BufferedReader
 from PIL import Image
@@ -34,6 +35,16 @@ classifier_models = "models/my_classifier.pkl"
 # test_raw_folder      = "data/images/test_raw"
 # test_aligned_folder  = "data/images/test_aligned"
 
+@app.before_first_request
+def load_model_to_app():
+    print('Testing classifier')
+    with open(classifier_models, 'rb') as infile:
+        (model_classifier, class_names) = pickle.load(infile)
+    app.classifier  = model_classifier
+    app.class_names = class_names
+
+    print('Loaded classifier model from file "%s"\n' % app.classifier)
+
 @app.route('/restful/img', methods=['POST', 'GET'])
 def restful_image():
     g.start = time.time()
@@ -41,7 +52,6 @@ def restful_image():
     img = Image.open(img)
     img = np.array(img)
 
-    print(img)
     result = compare_route_restful(img)
     diff = time.time() - g.start
 
@@ -54,10 +64,8 @@ def restful_image():
 def compare_route_restful(img):
     argv = []
     argv.append(pretrained_models)
-    argv.append(classifier_models)
     argv.append("")
-    print(argv)
-    result = compare.main(compare.parse_arguments(argv), img, True)
+    result = compare.main(compare.parse_arguments(argv), img, True, app.classifier, app.class_names)
 
     return result
 
@@ -66,10 +74,9 @@ def compare_route():
     g.start = time.time()
     argv = []
     argv.append(pretrained_models)
-    argv.append(classifier_models)
     argv.append(session.get('img_path'))
 
-    result = compare.main(compare.parse_arguments(argv), "", False)
+    result = compare.main(compare.parse_arguments(argv), "", False, app.classifier, app.class_names)
 
     session['detected']   = result['detected']
     session['person']     = result['person']
