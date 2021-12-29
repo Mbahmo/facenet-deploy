@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, \
-    send_from_directory, redirect, url_for, session, request, jsonify, g, send_file
+    send_from_directory, redirect, url_for, session, request, jsonify, g, send_file, make_response
 from flask_session import Session
 
 from tensorflow.keras.models import load_model
@@ -8,10 +8,16 @@ from tensorflow import expand_dims
 import numpy as np
 import time
 import os
+import cv2
+
+from io import BufferedReader
+from PIL import Image
 
 from src.align import align_dataset_mtcnn as mtcnn
 from src import classifier
 from src import compare
+
+import imageio
 
 app = Flask(__name__)
 app.secret_key                   = 'super secret key'
@@ -30,8 +36,30 @@ classifier_models = "models/my_classifier.pkl"
 
 @app.route('/restful/img', methods=['POST', 'GET'])
 def restful_image():
+    g.start = time.time()
     img = request.files['img']
+    img = Image.open(img)
+    img = np.array(img)
+
     print(img)
+    result = compare_route_restful(img)
+    diff = time.time() - g.start
+
+    print(result['detected'])
+    print(result['person'])
+    print(result['confidence'])
+
+    return (f"Waktu Proses : {diff}")
+
+def compare_route_restful(img):
+    argv = []
+    argv.append(pretrained_models)
+    argv.append(classifier_models)
+    argv.append("")
+    print(argv)
+    result = compare.main(compare.parse_arguments(argv), img, True)
+
+    return result
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare_route():
@@ -40,7 +68,8 @@ def compare_route():
     argv.append(pretrained_models)
     argv.append(classifier_models)
     argv.append(session.get('img_path'))
-    result = compare.main(compare.parse_arguments(argv))
+
+    result = compare.main(compare.parse_arguments(argv), "", False)
 
     session['detected']   = result['detected']
     session['person']     = result['person']

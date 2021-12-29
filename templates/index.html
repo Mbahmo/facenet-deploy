@@ -22,11 +22,16 @@
 
                 <h1 class="text-3xl text-bold">FaceNet Face Verification System</h1>
                 {% if session['detected'] %}
-                    <h3 class="text-xl text-bold">{{session['person']}}</h3>
-                    <h4 class="text-xl text-bold">{{session['confidence']}}</h4>
+                    <h3 class="mt-5 text-xl text-bold text-center">
+                        {% if session['confidence'] == None %}
+                            Wajah tidak dikenali
+                        {% else %}
+                            Wajah dari {{session['person']}}
+                        {% endif %}
+                    </h3>
                     <img
                             src="{{ url_for('send_uploaded_image', filename=(session['img']) ) }}"
-                            class="mt-8 mb-4 h-48 border-8 border-gray-200 rounded-md"
+                            class="mt-1 mb-4 h-48 border-8 border-gray-200 rounded-md"
                     />
                 {% else %}
                 <div
@@ -45,17 +50,6 @@
                         Masukkan Citra Wajah
                     </p>
                 </div>
-                {% endif %}
-
-                {% if prediction %}
-                <p class="mb-8">
-                    Result : {{prediction}}</p>
-
-                        Masukkan gambar kucing atau anjing
-                </div>
-                {% endif %} {% if prediction %}
-                <p class="mb-8">Hasil Prediksi: {{prediction}}</p>
-
                 {% endif %}
 
                 <form
