@@ -37,6 +37,7 @@ classifier_models = "models/my_classifier.pkl"
 
 @app.before_first_request
 def load_model_to_app():
+    # print(__name__)
     print('Testing classifier')
     with open(classifier_models, 'rb') as infile:
         (model_classifier, class_names) = pickle.load(infile)
@@ -162,4 +163,14 @@ def send_uploaded_image(filename=''):
 #     return render_template('loading.html', url = url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+
+    import logging
+    logging.basicConfig(filename='tmp.log',
+                        format='%(levelname)s %(asctime)s :: %(message)s',
+                        level=logging.DEBUG)
+
+    # logging.debug('Berjalan')
+    logging.debug('debug')
+
+    app.run(host="0.0.0.0")
