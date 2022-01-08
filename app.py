@@ -60,7 +60,9 @@ def restful_image():
     print(result['person'])
     print(result['confidence'])
 
-    return (f"Waktu Proses : {diff}")
+    return (f"Waktu Proses : {diff} "
+            f"\n Wajah dikenali sebagai : {str(result['person'])}"
+            f"")
 
 def compare_route_restful(img):
     argv = []
