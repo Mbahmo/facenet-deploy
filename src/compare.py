@@ -81,9 +81,10 @@ def main(args, img, Is_Restful, model_classifier, class_names):
                 for j in range(cout_per_image[i]):
                     # print('%s: %.3f' % (class_names[best_class_indices[k]], best_class_probabilities[k]))
                     person = class_names[best_class_indices[k]]
-                    confidence = best_class_probabilities[k] * 100
+                    confidence = best_class_probabilities[k]
+                    print("Best Class Probabilities", best_class_probabilities[k])
 
-                    if(confidence < 5):
+                    if confidence < 0.05:
                         confidence = None
                     k+=1
     result = {}

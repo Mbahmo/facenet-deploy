@@ -56,13 +56,14 @@ def restful_image():
     result = compare_route_restful(img)
     diff = time.time() - g.start
 
-    print(result['detected'])
-    print(result['person'])
-    print(result['confidence'])
+    if(result['confidence'] == None):
+        return (f"Waktu Proses : {diff} "
+            f"\n Pegawai Tidak Ditemukan")
+    else:
+        return (f"Waktu Proses : {diff} "
+                f"\n Wajah dikenali sebagai : {str(result['person'])}")
 
-    return (f"Waktu Proses : {diff} "
-            f"\n Wajah dikenali sebagai : {str(result['person'])}"
-            f"")
+                # f"\n Nilai Confidence : {str(result['confidence'])}")
 
 def compare_route_restful(img):
     argv = []
