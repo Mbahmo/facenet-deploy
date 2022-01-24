@@ -59,12 +59,17 @@ def restful_image():
     result = compare_route_restful(img)
     diff = time.time() - g.start
 
+
+    print("CPU Percent : ", psutil.cpu_percent())
+    print("Test : ",        psutil.sensors_temperatures())
+
     if(result['confidence'] == None):
         return (f"Waktu Proses : {diff} "
             f"\n Pegawai Tidak Ditemukan")
     else:
         return (f"Waktu Proses : {diff} "
                 f"\n Wajah dikenali sebagai : {str(result['person'])}")
+
 
                 # f"\n Nilai Confidence : {str(result['confidence'])}")
 
@@ -92,6 +97,8 @@ def compare_route():
 
     print("Waktu Proses : ", diff)
     print("CPU Percent : ", psutil.cpu_percent())
+    print("TEst : ", psutil.sensors_temperatures())
+
     return redirect(url_for('index'))
 
 @app.route('/', methods=['GET', 'POST'])
