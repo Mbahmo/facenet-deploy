@@ -42,7 +42,7 @@ import src.align.detect_face as detect_face
 from six import moves
 from PIL import Image
 
-def main(args, img, Is_Restful, model_classifier, class_names):
+def main(args, img, Is_Restful, model_classifier, models_pretrained, class_names):
     if Is_Restful:
         isface, images, cout_per_image, nrof_samples, img_aligned = load_and_align_data_rest(img, 160, 44, 1.0)
     else:
@@ -57,11 +57,14 @@ def main(args, img, Is_Restful, model_classifier, class_names):
         with tf.Session() as sess:
       
             # Load the model
-            facenet.load_model(args.model)
+            if Is_Restful:
+                facenet.load_model(models_pretrained)
+            else:
+                facenet.load_model(args.model)
     
             # Get input and output tensors
-            images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
-            embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
+            images_placeholder      = tf.get_default_graph().get_tensor_by_name("input:0")
+            embeddings              = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
             # Run forward pass to calculate embeddings

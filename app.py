@@ -19,6 +19,7 @@ from src import classifier
 from src import compare
 
 import imageio
+import psutil
 
 app = Flask(__name__)
 app.secret_key                   = 'super secret key'
@@ -41,8 +42,10 @@ def load_model_to_app():
     print('Testing classifier')
     with open(classifier_models, 'rb') as infile:
         (model_classifier, class_names) = pickle.load(infile)
-    app.classifier  = model_classifier
-    app.class_names = class_names
+
+    app.pretrained_models  = pretrained_models
+    app.classifier         = model_classifier
+    app.class_names        = class_names
 
     print('Loaded classifier model from file "%s"\n' % app.classifier)
 
@@ -67,9 +70,9 @@ def restful_image():
 
 def compare_route_restful(img):
     argv = []
-    argv.append(pretrained_models)
     argv.append("")
-    result = compare.main(compare.parse_arguments(argv), img, True, app.classifier, app.class_names)
+    argv.append("")
+    result = compare.main(compare.parse_arguments(argv), img, True, app.classifier, app.pretrained_models, app.class_names)
 
     return result
 
@@ -88,6 +91,7 @@ def compare_route():
     diff = time.time() - g.start
 
     print("Waktu Proses : ", diff)
+    print("CPU Percent : ", psutil.cpu_percent())
     return redirect(url_for('index'))
 
 @app.route('/', methods=['GET', 'POST'])
