@@ -59,7 +59,7 @@ def restful_image():
     # temperature_start   = MacTmp.CPU_Temp()
 
     print("RAM / Memory Usage Start : ", ram_start)
-    print("CPU Temperature Start : ", temperature_start)
+    # print("CPU Temperature Start : ", temperature_start)
 
     g.start = time.time()
     img = request.files['img']
@@ -74,7 +74,7 @@ def restful_image():
     # temperature_end   = MacTmp.CPU_Temp()
 
     print("RAM / Memory Usage End : ", ram_end)
-    print("CPU Temperature End : ", temperature_end)
+    # print("CPU Temperature End : ", temperature_end)
 
     ram         = (ram_start + ram_end) / 2
     # temperature = (float(temperature_start) + float(temperature_end)) / 2
