@@ -43,6 +43,8 @@ from six import moves
 from PIL import Image
 
 def main(args, img, Is_Restful, model_classifier, models_pretrained, class_names):
+
+
     if Is_Restful:
         isface, images, cout_per_image, nrof_samples, img_aligned = load_and_align_data_rest(img, 160, 44, 1.0)
     else:

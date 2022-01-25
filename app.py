@@ -20,6 +20,7 @@ from src import compare
 
 import imageio
 import psutil
+import MacTmp
 
 app = Flask(__name__)
 app.secret_key                   = 'super secret key'
@@ -51,6 +52,14 @@ def load_model_to_app():
 
 @app.route('/restful/img', methods=['POST', 'GET'])
 def restful_image():
+    cpu                 = psutil.cpu_percent(8)
+    ram_start           = psutil.virtual_memory().percent
+    temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
+    # temperature_start   = MacTmp.CPU_Temp()
+
+    print("RAM / Memory Usage Start : ", ram_start)
+    print("CPU Temperature Start : ", temperature_start)
+
     g.start = time.time()
     img = request.files['img']
     img = Image.open(img)
@@ -59,18 +68,32 @@ def restful_image():
     result = compare_route_restful(img)
     diff = time.time() - g.start
 
+    ram_end           = psutil.virtual_memory().percent
+    temperature_end = psutil.sensors_temperatures()["cpu_thermal"][0]
+    # temperature_end   = MacTmp.CPU_Temp()
 
-    print("CPU Percent : ", psutil.cpu_percent())
-    print("Test : ",        psutil.sensors_temperatures())
+    print("RAM / Memory Usage End : ", ram_end)
+    print("CPU Temperature End : ", temperature_end)
+
+    ram         = (ram_start + ram_end) / 2
+    temperature = (float(temperature_start) + float(temperature_end)) / 2
 
     if(result['confidence'] == None):
-        return (f"Waktu Proses : {diff} "
-            f"\n Pegawai Tidak Ditemukan")
+        return (
+                f"Waktu Proses : {diff} "
+                f"\n Pegawai Tidak Ditemukan"
+                f"\n CPU Usage : {str(cpu)} "
+                f"\n RAM / Memory Usage : {str(ram)} "
+                f"\n CPU Temperature : {str(temperature)} "
+                )
     else:
-        return (f"Waktu Proses : {diff} "
-                f"\n Wajah dikenali sebagai : {str(result['person'])}")
-
-
+        return (
+                f"Waktu Proses : {diff} "
+                f"\n Wajah dikenali sebagai : {str(result['person'])} "
+                f"\n CPU Usage : {str(cpu)} "
+                f"\n RAM / Memory Usage : {str(ram)} "
+                f"\n CPU Temperature : {str(temperature)} "
+                )
                 # f"\n Nilai Confidence : {str(result['confidence'])}")
 
 def compare_route_restful(img):
@@ -96,8 +119,8 @@ def compare_route():
     diff = time.time() - g.start
 
     print("Waktu Proses : ", diff)
-    print("CPU Percent : ", psutil.cpu_percent())
-    print("TEst : ", psutil.sensors_temperatures())
+    # print("CPU Percent : ", psutil.cpu_percent())
+    # print("TEst : ", psutil.sensors_temperatures())
 
     return redirect(url_for('index'))
 
@@ -178,13 +201,5 @@ def send_uploaded_image(filename=''):
 
 if __name__ == '__main__':
     # app.run(debug=True)
-
-    import logging
-    logging.basicConfig(filename='tmp.log',
-                        format='%(levelname)s %(asctime)s :: %(message)s',
-                        level=logging.DEBUG)
-
-    # logging.debug('Berjalan')
-    logging.debug('debug')
 
     app.run(host="0.0.0.0")
