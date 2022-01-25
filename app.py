@@ -52,7 +52,7 @@ def load_model_to_app():
 
 @app.route('/restful/img', methods=['POST', 'GET'])
 def restful_image():
-    cpu                 = psutil.cpu_percent(5)
+    cpu                 = psutil.cpu_percent(4)
     ram_start           = psutil.virtual_memory().percent
     # print("Suhu", psutil.sensors_temperatures())
     # temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
