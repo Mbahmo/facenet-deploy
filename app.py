@@ -77,7 +77,7 @@ def restful_image():
     print("CPU Temperature End : ", temperature_end)
 
     ram         = (ram_start + ram_end) / 2
-    temperature = (float(temperature_start) + float(temperature_end)) / 2
+    # temperature = (float(temperature_start) + float(temperature_end)) / 2
 
     if(result['confidence'] == None):
         return (
@@ -85,7 +85,7 @@ def restful_image():
                 f"\n Pegawai Tidak Ditemukan"
                 f"\n CPU Usage : {str(cpu)} "
                 f"\n RAM / Memory Usage : {str(ram)} "
-                f"\n CPU Temperature : {str(temperature)} "
+                # f"\n CPU Temperature : {str(temperature)} "
                 )
     else:
         return (
@@ -93,7 +93,7 @@ def restful_image():
                 f"\n Wajah dikenali sebagai : {str(result['person'])} "
                 f"\n CPU Usage : {str(cpu)} "
                 f"\n RAM / Memory Usage : {str(ram)} "
-                f"\n CPU Temperature : {str(temperature)} "
+                # f"\n CPU Temperature : {str(temperature)} "
                 )
                 # f"\n Nilai Confidence : {str(result['confidence'])}")
 
