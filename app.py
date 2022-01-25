@@ -20,6 +20,7 @@ from src import compare
 
 import imageio
 import psutil
+# import MacTmp
 
 app = Flask(__name__)
 app.secret_key                   = 'super secret key'
@@ -51,7 +52,7 @@ def load_model_to_app():
 
 @app.route('/restful/img', methods=['POST', 'GET'])
 def restful_image():
-    cpu                 = psutil.cpu_percent(5)
+    cpu                 = psutil.cpu_percent(8)
     ram_start           = psutil.virtual_memory().percent
     temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
     # temperature_start   = MacTmp.CPU_Temp()
