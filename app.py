@@ -54,7 +54,7 @@ def load_model_to_app():
 def restful_image():
     cpu                 = psutil.cpu_percent(8)
     ram_start           = psutil.virtual_memory().percent
-    print("Suhu", psutil.sensors_temperatures())
+    # print("Suhu", psutil.sensors_temperatures())
     # temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
     # temperature_start   = MacTmp.CPU_Temp()
 
@@ -85,7 +85,7 @@ def restful_image():
                 f"\n Pegawai Tidak Ditemukan"
                 f"\n CPU Usage : {str(cpu)} "
                 f"\n RAM / Memory Usage : {str(ram)} "
-                # f"\n CPU Temperature : {str(temperature)} "
+                f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
                 )
     else:
         return (
@@ -93,7 +93,7 @@ def restful_image():
                 f"\n Wajah dikenali sebagai : {str(result['person'])} "
                 f"\n CPU Usage : {str(cpu)} "
                 f"\n RAM / Memory Usage : {str(ram)} "
-                # f"\n CPU Temperature : {str(temperature)} "
+                f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
                 )
                 # f"\n Nilai Confidence : {str(result['confidence'])}")
 
