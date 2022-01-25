@@ -54,7 +54,8 @@ def load_model_to_app():
 def restful_image():
     cpu                 = psutil.cpu_percent(8)
     ram_start           = psutil.virtual_memory().percent
-    temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
+    print("Suhu", psutil.sensors_temperatures())
+    # temperature_start = psutil.sensors_temperatures()["cpu_thermal"][0]
     # temperature_start   = MacTmp.CPU_Temp()
 
     print("RAM / Memory Usage Start : ", ram_start)
@@ -69,7 +70,7 @@ def restful_image():
     diff = time.time() - g.start
 
     ram_end           = psutil.virtual_memory().percent
-    temperature_end = psutil.sensors_temperatures()["cpu_thermal"][0]
+    # temperature_end = psutil.sensors_temperatures()["cpu_thermal"][0]
     # temperature_end   = MacTmp.CPU_Temp()
 
     print("RAM / Memory Usage End : ", ram_end)
