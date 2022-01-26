@@ -81,21 +81,21 @@ def restful_image():
 
     if(result['confidence'] == None):
         return (
-                f"Waktu Proses : {diff} "
-                f"\n Pegawai Tidak Ditemukan"
-                f"\n CPU Usage : {str(cpu)} "
-                f"\n RAM / Memory Usage : {str(ram)} "
-                f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
-                )
+            f"Waktu Proses : {diff} "
+            f"\n Pegawai Tidak Ditemukan"
+            f"\n CPU Usage : {str(cpu)} "
+            f"\n RAM / Memory Usage : {str(ram)} "
+            f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
+        )
     else:
         return (
-                f"Waktu Proses : {diff} "
-                f"\n Wajah dikenali sebagai : {str(result['person'])} "
-                f"\n CPU Usage : {str(cpu)} "
-                f"\n RAM / Memory Usage : {str(ram)} "
-                f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
-                )
-                # f"\n Nilai Confidence : {str(result['confidence'])}")
+            f"Waktu Proses : {diff} "
+            f"\n Wajah dikenali sebagai : {str(result['person'])} "
+            f"\n CPU Usage : {str(cpu)} "
+            f"\n RAM / Memory Usage : {str(ram)} "
+            f"\n CPU Temperature : {str(psutil.sensors_temperatures())} "
+        )
+        # f"\n Nilai Confidence : {str(result['confidence'])}")
 
 def compare_route_restful(img):
     argv = []
